@@ -26,7 +26,7 @@ class TodoListController
         $f3->DB->exec(
             'UPDATE todos SET completed_at = :completedAt WHERE id=:todoId',
             [
-                ':completedAt' => $f3->get('POST.completed') ? now() : null,
+                ':completedAt' => $f3->get('POST.completed') === 'true' ? now() : null,
                 ':todoId' => $f3->get('POST.todoId'),
             ]
         );
