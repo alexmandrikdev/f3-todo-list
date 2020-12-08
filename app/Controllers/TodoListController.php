@@ -1,6 +1,6 @@
 <?php
 
-class TodoListController
+class TodoListController extends Controller
 {
     public function index()
     {
