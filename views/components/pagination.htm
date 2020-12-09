@@ -1,0 +1,14 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item {{ @page <= 1 ? 'disabled' : '' }}"><a class="page-link"
+                href="{{ 'todo_list' | alias }}?page={{ @page > 1 ? @page - 1 : 1 }}">Previous</a></li>
+
+        <loop from="{{ @i=1 }}" to="{{ @i <= @pages }}" step="{{ @i++ }}">
+            <li class="page-item {{ @i == @page ? 'active' : '' }}"><a class="page-link"
+                    href="{{ 'todo_list' | alias }}?page={{ @i }}">{{ @i }}</a></li>
+        </loop>
+
+        <li class="page-item {{ @page >= @pages ? 'disabled' : '' }}"><a class="page-link"
+                href="{{ 'todo_list' | alias }}?page={{ @page < @pages ? @page + 1 : @pages }}">Next</a></li>
+    </ul>
+</nav>

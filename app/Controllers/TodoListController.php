@@ -4,13 +4,17 @@ class TodoListController
 {
     public function index(Base $f3): void
     {
-        $f3->set('todos', $f3->DB->exec(
-            'SELECT * FROM todos ' .
-                'WHERE user_id=:user_id',
-            [
-                ':user_id' => 1
-            ]
-        ));
+        $todo = new DB\SQL\Mapper($f3->DB, 'todos');
+
+        $page = $_GET['page'] ?: 1;
+
+        $take = 10;
+
+        $todos = $todo->paginate($page - 1, $take, [
+            'user_id=?', 1
+        ]);
+
+        $f3->set('todos', $todos);
 
         $f3->set('extraScripts', [
             $f3->BASE . '/js/todo-list/index.js'
