@@ -1,10 +1,11 @@
 function onCheckboxChecked(todoId, element) {
   $.ajax({
     url: "/todos",
-    type: "POST",
+    type: "PUT",
     data: {
       todoId,
       completed: element.checked,
     },
+    // success: (res) => console.log(res),
   });
 }
