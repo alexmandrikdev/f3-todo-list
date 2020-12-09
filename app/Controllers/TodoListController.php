@@ -16,7 +16,7 @@ class TodoListController
 
             $take = 10;
 
-            $order = $_GET['order'] ?: '';
+            $order = $_GET['sort'] ?: '';
 
             $todos = $this->todo->paginate($page - 1, $take, [
                 'user_id=?', $f3->get('SESSION.userId')
