@@ -18,6 +18,8 @@ class TodoListController
 
         $todos = $this->todo->paginate($page - 1, $take, [
             'user_id=?', 1
+        ], [
+            'order' => 'id DESC'
         ]);
 
         $f3->set('todos', $todos);
