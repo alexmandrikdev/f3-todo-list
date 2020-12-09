@@ -19,7 +19,7 @@ class TodoListController
             $todos = $this->todo->paginate($page - 1, $take, [
                 'user_id=?', $f3->get('SESSION.userId')
             ], [
-                'order' => 'id DESC'
+                'order' => $this->determineOrder($_GET['order'])
             ]);
 
             $f3->set('todos', $todos);
@@ -74,5 +74,40 @@ class TodoListController
                 ':todoId' => $request['todoId'],
             ]
         );
+    }
+
+    /**
+     * Determine the order based on the $order param
+     * 
+     * @param string $order 
+     * @return string 
+     */
+    private function determineOrder(string $order): string
+    {
+        switch ($order) {
+            case 'name':
+                return 'todo';
+                break;
+
+            case 'name_desc':
+                return 'todo DESC';
+                break;
+
+            case 'deadline':
+                return 'deadline';
+                break;
+
+            case 'deadline_desc':
+                return 'deadline DESC';
+                break;
+
+            case 'add_date':
+                return 'id';
+                break;
+            
+            default:
+                return 'id DESC';
+                break;
+        }
     }
 }
