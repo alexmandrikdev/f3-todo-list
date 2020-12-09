@@ -1,15 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ 'todo_list' | alias }}">Todo List</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -17,9 +10,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ 'todo_list' | alias }}">Todos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ 'login' | alias }}">Login</a>
-        </li>
+        <check if="{{ $_SESSION['userId'] }}">
+          <true>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ 'logout' | alias }}">Logout</a>
+            </li>
+          </true>
+          <false>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ 'login' | alias }}">Login</a>
+            </li>
+          </false>
+        </check>
       </ul>
     </div>
   </div>

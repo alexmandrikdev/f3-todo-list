@@ -29,4 +29,11 @@ class AuthController
 
         $f3->reroute('@todo_list', true);
     }
+
+    public function logout(Base $f3)
+    {
+        $f3->clear('SESSION.userId');
+
+        $f3->reroute('@todo_list', true);
+    }
 }
