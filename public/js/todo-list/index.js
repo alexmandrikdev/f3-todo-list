@@ -1,6 +1,6 @@
 function onCheckboxChecked(todoId, element) {
   $.ajax({
-    url: "/todos",
+    url: "/todos/toggleCompleted",
     type: "PUT",
     data: {
       todoId,
