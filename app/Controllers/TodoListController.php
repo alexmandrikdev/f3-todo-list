@@ -2,15 +2,21 @@
 
 class TodoListController
 {
+    private $todo;
+
+    public function __construct(Base $f3)
+    {
+        $this->todo = new DB\SQL\Mapper($f3->DB, 'todos');
+        
+    }
+
     public function index(Base $f3): void
     {
-        $todo = new DB\SQL\Mapper($f3->DB, 'todos');
-
         $page = $_GET['page'] ?: 1;
 
         $take = 10;
 
-        $todos = $todo->paginate($page - 1, $take, [
+        $todos = $this->todo->paginate($page - 1, $take, [
             'user_id=?', 1
         ]);
 
@@ -25,7 +31,20 @@ class TodoListController
         echo Template::instance()->render('layout.htm');
     }
 
-    public function update(Base $f3)
+    public function store(Base $f3)
+    {
+        $this->todo->todo = $_POST['todo'];
+
+        $this->todo->deadline = $_POST['deadline'] ?: null;
+
+        $this->todo->user_id = 1;
+        
+        $this->todo->save();
+
+        $f3->reroute('@todo_list', true);
+    }
+
+    public function toggleCompleted(Base $f3)
     {
         parse_str(file_get_contents("php://input"), $request);
 

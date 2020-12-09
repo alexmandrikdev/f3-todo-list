@@ -9,3 +9,8 @@ function onCheckboxChecked(todoId, element) {
     // success: (res) => console.log(res),
   });
 }
+
+flatpickr(".date-picker", {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+});

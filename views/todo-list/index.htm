@@ -1,3 +1,11 @@
+<form method="POST">
+  <div class="row mb-2">
+    <div class="col-9"><input type="text" name="todo" class="form-control" required></div>
+    <div class="col-2"><input type="text" name="deadline" class="form-control date-picker"></div>
+    <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
+  </div>
+</form>
+
 <check if="{{ $_GET['page'] <= @todos['count'] }}">
   <ul class="list-group">
     <repeat group="{{ @todos['subset'] }}" value="{{ @todo }}">
