@@ -60,7 +60,7 @@ class Validator
     {
         $input = $this->inputs[$inputName];
 
-        if (!is_null($input)) {
+        if (!is_null($input) && $input !== '') {
             return true;
         }
 
