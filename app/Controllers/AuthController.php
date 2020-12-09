@@ -34,6 +34,6 @@ class AuthController
     {
         $f3->clear('SESSION.userId');
 
-        $f3->reroute('@todo_list', true);
+        $f3->reroute('@login', true);
     }
 }
