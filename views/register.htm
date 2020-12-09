@@ -1,0 +1,26 @@
+<form method="POST" class="mx-auto mt-5" style="max-width: 300px;">
+    <div class="mt-2">
+        <label>Username</label>
+        <input type="text" class="form-control {{ @errors['username'] ? 'is-invalid' : '' }}" name="username" value="{{ @old['username'] }}" required>
+        <check if="{{ @errors['username'] }}"><p class="text-danger text-end">{{ @errors['username'] }}</p></check>
+    </div>
+
+    <div class="mt-2">
+        <label>Password</label>
+        <input type="password" class="form-control {{ @errors['password'] ? 'is-invalid' : '' }}" name="password" required>
+        <check if="{{ @errors['password'] }}"><p class="text-danger text-end">{{ @errors['password'] }}</p></check>
+    </div>
+
+    <div class="mt-2">
+        <label>Password Confirmation</label>
+        <input type="password" class="form-control" name="password_confirmation" required>
+    </div>
+
+    <div class="w-100 text-center mt-3">
+        <input type="submit" class="btn btn-primary" value="Sign Up">
+    </div>
+</form>
+
+<div class="w-100 text-center mt-3">
+    Already signed up? <a class="mt-3 mx-auto" href="{{ 'login' | alias }}">Please sign in!</a>
+</div>
