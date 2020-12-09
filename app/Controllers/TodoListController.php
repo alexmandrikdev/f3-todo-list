@@ -42,13 +42,19 @@ class TodoListController
             $f3->error(401, 'Unauthorized');
         }
 
-        $this->todo->todo = $_POST['todo'];
+        $validator = new Validator($_POST, [
+            'todo' => ['required']
+        ]);
 
-        $this->todo->deadline = $_POST['deadline'] ?: null;
+        if ($validator->validate()) {
+            $this->todo->todo = $_POST['todo'];
 
-        $this->todo->user_id = $f3->get('SESSION.userId');
+            $this->todo->deadline = $_POST['deadline'] ?: null;
 
-        $this->todo->save();
+            $this->todo->user_id = $f3->get('SESSION.userId');
+
+            $this->todo->save();
+        }
 
         $f3->reroute('@todo_list', true);
     }
