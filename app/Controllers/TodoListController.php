@@ -28,7 +28,7 @@ class TodoListController
             $f3->BASE . '/js/todo-list/index.js'
         ]);
 
-        $f3->set('include', 'todo-list/index.htm');
+        $f3->set('view', 'todo-list/index.htm');
 
         echo Template::instance()->render('layout.htm');
     }
@@ -40,7 +40,7 @@ class TodoListController
         $this->todo->deadline = $_POST['deadline'] ?: null;
 
         $this->todo->user_id = 1;
-        
+
         $this->todo->save();
 
         $f3->reroute('@todo_list', true);
