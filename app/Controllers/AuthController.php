@@ -18,16 +18,23 @@ class AuthController
 
     public function login(Base $f3)
     {
-        $auth = new Auth($this->user, [
-            'id' => 'username',
-            'pw' => 'password'
+        $this->user->load([
+            'username=?', $_POST['username']
         ]);
 
-        if ($auth->login($_POST['username'], $_POST['password'])) {
-            $f3->set('SESSION.userId', $this->user->id);
-        }
+        if ($this->user->dry() || !password_verify($_POST['password'], $this->user->password)) {
+            $f3->set('errors', [
+                'login' => 'Invalid username or password'
+            ]);
 
-        $f3->reroute('@todo_list', true);
+            $f3->set('view', 'login.htm');
+
+            echo Template::instance()->render('layout.htm');
+        } else {
+            $f3->set('SESSION.userId', $this->user->id);
+
+            $f3->reroute('@todo_list', true);
+        }
     }
 
     public function registerView(Base $f3)

@@ -5,6 +5,8 @@
     <label class="mt-2">Password</label>
     <input type="password" class="form-control" name="password" required>
 
+    <check if="{{ @errors['login'] }}"><p class="text-danger text-end">{{ @errors['login'] }}</p></check>
+
     <div class="w-100 text-center mt-3">
         <input type="submit" class="btn btn-primary" value="Login">
     </div>
