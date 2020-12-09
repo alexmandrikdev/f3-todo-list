@@ -1,7 +1,7 @@
 <ul class="list-group">
   <repeat group="{{ @todos }}" value="{{ @todo }}">
     <li
-      class="list-group-item d-flex align-items-center {{ @todo['deadline'] >= !@todo['completed_at'] && now() >= @todo['deadline'] ? 'bg-danger text-white' : '' }}"
+      class="list-group-item d-flex align-items-center {{ @todo['deadline'] && @todo['deadline'] >= !@todo['completed_at'] && now() >= @todo['deadline'] ? 'bg-danger text-white' : '' }}"
     >
       <span class="me-2">
         <input onchange="onCheckboxChecked({{ @todo['id'] }}, this)" type="checkbox" name="{{ @todo['id'] }}" class="todo" {{
