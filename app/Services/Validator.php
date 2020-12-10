@@ -4,9 +4,9 @@ class Validator
 {
     private $errors = [];
 
-    private $inputs;
+    private $attributes;
 
-    private $inputRules;
+    private $attributeRules;
 
     private $f3;
 
@@ -17,18 +17,18 @@ class Validator
      */
     private $attributeCasts = [];
 
-    public function __construct(array $inputs, array $inputRules)
+    public function __construct(array $attributes, array $attributeRules)
     {
-        $this->inputs = $inputs;
+        $this->attributes = $attributes;
 
-        $this->inputRules = $inputRules;
+        $this->attributeRules = $attributeRules;
 
         $this->f3 = Base::instance();
     }
 
     public function validate(): bool
     {
-        foreach ($this->inputRules as $inputName => $rules) {
+        foreach ($this->attributeRules as $attributeName => $rules) {
             foreach ($rules as $rule) {
                 [$rule, $arguments] = explode(':', $rule);
 
@@ -39,7 +39,7 @@ class Validator
                 if (!method_exists('Validator', $functionName)) {
                     $this->f3->error(422, "Invalid validation rule: $rule");
                 } else {
-                    call_user_func([$this, $functionName], $inputName, $arguments);
+                    call_user_func([$this, $functionName], $attributeName, $arguments);
                 }
             }
         }
@@ -63,86 +63,86 @@ class Validator
         $this->attributeCasts = $casts;
     }
 
-    private function sanitizeInputs(array $inputs): array
+    private function sanitizeInputs(array $attributes): array
     {
         $sanitizedInputs = [];
 
-        foreach ($inputs as $input) {
-            $sanitizedInputs[] = trim(htmlspecialchars($input));
+        foreach ($attributes as $attribute) {
+            $sanitizedInputs[] = trim(htmlspecialchars($attribute));
         }
 
         return $sanitizedInputs;
     }
 
-    private function checkRequired(string $inputName): bool
+    private function checkRequired(string $attributeName): bool
     {
-        $input = $this->inputs[$inputName];
+        $attribute = $this->attributes[$attributeName];
 
-        if (!is_null($input) && $input !== '') {
+        if (!is_null($attribute) && $attribute !== '') {
             return true;
         }
 
-        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is required!";
+        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is required!";
 
         return false;
     }
 
-    private function checkMin(string $inputName, array $arguments): bool
+    private function checkMin(string $attributeName, array $arguments): bool
     {
         $min = $arguments[0];
 
-        $input = $this->inputs[$inputName];
+        $attribute = $this->attributes[$attributeName];
 
-        if (strlen($input) >= $min) {
+        if (strlen($attribute) >= $min) {
             return true;
         }
 
-        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is too short (min length: $min)!";
+        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is too short (min length: $min)!";
 
         return false;
     }
 
-    private function checkMax(string $inputName, array $arguments): bool
+    private function checkMax(string $attributeName, array $arguments): bool
     {
         $max = $arguments[0];
 
-        $input = $this->inputs[$inputName];
+        $attribute = $this->attributes[$attributeName];
 
-        if (strlen($input) <= $max) {
+        if (strlen($attribute) <= $max) {
             return true;
         }
 
-        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is too long (max length: $max)!";
+        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is too long (max length: $max)!";
 
         return false;
     }
 
-    private function checkConfirmed(string $inputName, array $arguments): bool
+    private function checkConfirmed(string $attributeName, array $arguments): bool
     {
         $confirmationInputName = $arguments[0];
 
         echo $confirmationInputName;
 
         if (!$confirmationInputName) {
-            $confirmationInputName = $inputName . "_confirmation";
+            $confirmationInputName = $attributeName . "_confirmation";
         }
 
-        if ($this->inputs[$inputName] === $this->inputs[$confirmationInputName]) {
+        if ($this->attributes[$attributeName] === $this->attributes[$confirmationInputName]) {
             return true;
         }
 
-        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " must be confirmed!";
+        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " must be confirmed!";
 
         return false;
     }
 
-    private function checkUnique(string $inputName, array $arguments)
+    private function checkUnique(string $attributeName, array $arguments)
     {
         $table = $arguments[0];
         $column = $arguments[1];
 
         if (!$column) {
-            $column = $inputName;
+            $column = $attributeName;
         }
 
         $user = new DB\SQL\Mapper($this->f3->DB, $table);
@@ -152,14 +152,14 @@ class Validator
         }
 
         $user->load([
-            "$column=?", $this->inputs[$inputName]
+            "$column=?", $this->attributes[$attributeName]
         ]);
 
         if (!$user->id) {
             return true;
         }
 
-        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " must be unique!";
+        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " must be unique!";
 
         return false;
     }
