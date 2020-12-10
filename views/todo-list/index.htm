@@ -1,6 +1,7 @@
+<!-- TODO CREATE FORM -->
 <form method="POST">
   <div class="row mb-2">
-    <repeat group="{{ ['sort', 'hide_completed'] }}" value="{{ @key }}">
+    <repeat group="{{ ['sort', 'hide_completed', 'hide_no_deadline'] }}" value="{{ @key }}">
       <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
       <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
     </repeat>
@@ -11,7 +12,10 @@
 </form>
 
 <check if="{{ $_GET['page'] <= @todos['count'] }}">
+  <!-- LISTING OPTIONS FORM -->
   <form class="row mb-2">
+    <div class="col-5"></div>
+
     <!-- HIDE NO DEADLINE -->
     <div class="col-2 d-flex align-items-center">
       <div class="form-check">
@@ -22,6 +26,8 @@
         </label>
       </div>
     </div>
+
+    <!-- HIDE COMPLETED -->
     <div class="col-2 d-flex align-items-center">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" name="hide_completed"
@@ -31,6 +37,8 @@
         </label>
       </div>
     </div>
+
+    <!-- SORT -->
     <div class="col-3">
       <input type="hidden" id="sort" name="sort" value="{{ $_GET['sort'] }}">
 
@@ -72,6 +80,7 @@
     </div>
   </form>
 
+  <!-- TODO LIST -->
   <ul class="list-group">
     <repeat group="{{ @todos['subset'] }}" value="{{ @todo }}">
       <li
@@ -91,7 +100,9 @@
     </repeat>
   </ul>
 </check>
+
+<!-- PAGINATION -->
 <div class="d-flex justify-content-center mt-5">
   <include href="components/pagination.htm"
-    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},additionalParamKeys=sort&hide_completed" />
+    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},additionalParamKeys=sort&hide_completed&hide_no_deadline" />
 </div>
