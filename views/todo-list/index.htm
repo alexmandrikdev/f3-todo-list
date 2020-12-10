@@ -5,12 +5,15 @@
       <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
       <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
     </repeat>
-    <div class="col-9"><input type="text" name="todo" class="form-control {{ $_SESSION['errors']['todo'] ? 'is-invalid' : '' }}" required placeholder="New todo"></div>
+    
+    <set todoError="{{ @FLASH->getKey('errors')['todo'] }}"/>
+
+    <div class="col-9"><input type="text" name="todo" class="form-control {{ @todoError ? 'is-invalid' : '' }}" required placeholder="New todo"></div>
     <div class="col-2"><input type="text" name="deadline" class="form-control date-picker" placeholder="Deadline"></div>
     <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
   </div>
 </form>
-<check if="{{ $_SESSION['errors']['todo'] }}"><p class="text-danger mb-0">{{ $_SESSION['errors']['todo'] }}</p></check>
+<check if="{{ @todoError }}"><p class="text-danger mb-0">{{ @todoError }}</p></check>
 
 <check if="{{ $_GET['page'] <= @todos['count'] }}">
   <!-- LISTING OPTIONS FORM -->

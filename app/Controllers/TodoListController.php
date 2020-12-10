@@ -56,7 +56,7 @@ class TodoListController
         }
 
         $validator = new Validator($_POST, [
-            'todo' => ['required', 'max:255']
+            'todo' => ['required', 'max:10']
         ]);
 
         $validator->setAttributeCasts([
@@ -72,8 +72,8 @@ class TodoListController
 
             $this->todo->save();
         } else {
+            $f3->FLASH->setKey('errors', $validator->errors());
         }
-        $f3->set('SESSION.errors', $validator->errors());
 
         $additionalParams = '';
 
