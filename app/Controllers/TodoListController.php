@@ -59,10 +59,6 @@ class TodoListController
             'todo' => ['required', 'max:255']
         ]);
 
-        $validator->setAttributeCasts([
-            'todo' => 'name'
-        ]);
-
         if ($validator->validate()) {
             $this->todo->todo = $_POST['todo'];
 
