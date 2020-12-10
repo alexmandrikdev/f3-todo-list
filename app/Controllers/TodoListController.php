@@ -100,6 +100,28 @@ class TodoListController
     }
 
     /**
+     * Update deadline
+     * 
+     * @param Base $f3 
+     * @param array $params 
+     * @return void 
+     */
+    public function updateDeadline(Base $f3, array $params): void
+    {
+        if (!$f3->exists('SESSION.userId')) {
+            $f3->error(401, 'Unauthorized');
+        }
+
+        parse_str(file_get_contents("php://input"), $request);
+        
+        $this->todo->load(['id=?', $params['id']]);
+
+        $this->todo->deadline = $request['deadline'];
+
+        $this->todo->update();
+    }
+
+    /**
      * Determine the order based on the $order param
      * 
      * @param string $order 

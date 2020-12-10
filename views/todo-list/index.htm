@@ -96,8 +96,20 @@
           <span class="text-break">
             {{ @todo['todo'] }}
           </span>
-          <span class="ms-4 text-center me-1" style="white-space: nowrap">
+          <span class="ms-4 text-center me-1" style="white-space: nowrap" id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}
+          </span>
+          <span class="position-absolute" style="top: -14px; right: -25px;">
+            <div class="dropdown">
+              <button class="btn" type="button todo_options_dropdown" id="todo_{{ @todo['id'] }}_options_dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="todo_{{ @todo['id'] }}_options_dropdown">
+                <check if="{{ !@todo['deadline'] }}">
+                  <li><button class="dropdown-item" type="button" onclick="addDeadlineToTodo({{ @todo['id'] }})">Add deadline</button></li>
+                </check>
+              </ul>
+            </div>
           </span>
         </span>
       </li>
