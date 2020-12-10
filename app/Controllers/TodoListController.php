@@ -56,7 +56,7 @@ class TodoListController
         }
 
         $validator = new Validator($_POST, [
-            'todo' => ['required']
+            'todo' => ['required', 'max:255']
         ]);
 
         if ($validator->validate()) {
@@ -67,7 +67,9 @@ class TodoListController
             $this->todo->user_id = $f3->get('SESSION.userId');
 
             $this->todo->save();
+        } else {
         }
+        $f3->set('SESSION.errors', $validator->errors());
 
         $additionalParams = '';
 
