@@ -18,6 +18,8 @@
       </div>
     </div>
     <div class="col-3">
+      <input type="hidden" id="sort" name="sort" value="{{ $_GET['sort'] }}">
+
       <div class="dropdown">
         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
           <check if="{{ $_GET['sort'] }}">
@@ -30,12 +32,12 @@
           </check>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item {{ $_GET['sort'] === 'name' ? 'active' : '' }}" href="?sort=name">Name <i class="fas fa-long-arrow-alt-up"></i></a></li>
-          <li><a class="dropdown-item {{ $_GET['sort'] === 'name_desc' ? 'active' : '' }}" href="?sort=name_desc">Name <i class="fas fa-long-arrow-alt-down"></i></a></li>
-          <li><a class="dropdown-item {{ $_GET['sort'] === 'deadline' ? 'active' : '' }}" href="?sort=deadline">Deadline <i class="fas fa-long-arrow-alt-up"></i></a></li>
-          <li><a class="dropdown-item {{ $_GET['sort'] === 'deadline_desc' ? 'active' : '' }}" href="?sort=deadline_desc">Deadline <i class="fas fa-long-arrow-alt-down"></i></a></li>
-          <li><a class="dropdown-item {{ $_GET['sort'] === 'add_date' ? 'active' : '' }}" href="?sort=add_date">Add Date <i class="fas fa-long-arrow-alt-up"></i></a></li>
-          <li><a class="dropdown-item {{ !$_GET['sort'] || $_GET['sort'] === 'add_date_desc' ? 'active' : '' }}" href="?sort=add_date_desc">Add Date <i class="fas fa-long-arrow-alt-down"></i></a></li>
+          <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'name' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'name')">Name <i class="fas fa-long-arrow-alt-up"></i></button></li>
+          <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'name_desc' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'name_desc')">Name <i class="fas fa-long-arrow-alt-down"></i></button></li>
+          <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'deadline' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'deadline')">Deadline <i class="fas fa-long-arrow-alt-up"></i></button></li>
+          <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'deadline_desc' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'deadline_desc')">Deadline <i class="fas fa-long-arrow-alt-down"></i></button></li>
+          <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'add_date' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'add_date')">Add Date <i class="fas fa-long-arrow-alt-up"></i></button></li>
+          <li><button type="button" class="dropdown-item {{ !$_GET['sort'] || $_GET['sort'] === 'add_date_desc' ? 'active' : '' }}" onclick="setInputValueAndSubmitForm('#sort', 'add_date_desc')">Add Date <i class="fas fa-long-arrow-alt-down"></i></button></li>
         </ul>
       </div>
     </div>

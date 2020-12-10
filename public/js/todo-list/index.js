@@ -14,3 +14,7 @@ flatpickr(".date-picker", {
   enableTime: true,
   dateFormat: "Y-m-d H:i",
 });
+
+function setInputValueAndSubmitForm(inputSelector, value) {
+  $(inputSelector).val(value).closest("form").submit();
+}
