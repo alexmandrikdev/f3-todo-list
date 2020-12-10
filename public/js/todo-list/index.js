@@ -1,4 +1,4 @@
-function onCheckboxChecked(todoId, element) {
+function onCompletedCheckboxChange(todoId, element) {
   $.ajax({
     url: "/todos/toggleCompleted",
     type: "PUT",
@@ -6,7 +6,7 @@ function onCheckboxChecked(todoId, element) {
       todoId,
       completed: element.checked,
     },
-    // success: (res) => console.log(res),
+    success: () => location.reload(),
   });
 }
 
