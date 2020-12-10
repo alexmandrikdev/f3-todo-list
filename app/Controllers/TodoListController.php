@@ -65,7 +65,15 @@ class TodoListController
             $this->todo->save();
         }
 
-        $f3->reroute('@todo_list', true);
+        $additionalParams = '';
+
+        foreach ($_POST['additional_param_keys'] as $index => $key) {
+            $additionalParams .= $index === 0 ? '?' : '&';
+
+            $additionalParams .= "$key=" . $_POST[$key];
+        }
+
+        $f3->reroute("@todo_list$additionalParams", true);
     }
 
     public function toggleCompleted(Base $f3)

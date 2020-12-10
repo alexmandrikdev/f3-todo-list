@@ -1,5 +1,9 @@
 <form method="POST">
   <div class="row mb-2">
+    <repeat group="{{ ['sort', 'hide_completed'] }}" value="{{ @key }}">
+      <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
+      <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
+    </repeat>
     <div class="col-9"><input type="text" name="todo" class="form-control" required placeholder="New todo"></div>
     <div class="col-2"><input type="text" name="deadline" class="form-control date-picker" placeholder="Deadline"></div>
     <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
