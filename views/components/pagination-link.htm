@@ -1,0 +1,11 @@
+<li class="page-item {{ @isDisabled ? 'disabled' : '' }} {{ @isActive ? 'active' : '' }}">
+    <form>
+        <input type="hidden" name="page" value="{{ @page }}">
+
+        <repeat group="{{ explode('&', @additionalParamKeys) }}" value="{{ @key }}">
+            <input type="hidden" name="{{ @key }}" value="{{ @_GET[@key] }}">
+        </repeat>
+
+        <input class="page-link" type="submit" value="{{ @label }}">
+    </form>
+</li>

@@ -84,5 +84,5 @@
 </check>
 <div class="d-flex justify-content-center mt-5">
   <include href="components/pagination.htm"
-    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},sort={{ $_GET['sort'] }}" />
+    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},additionalParamKeys=sort&hide_completed" />
 </div>

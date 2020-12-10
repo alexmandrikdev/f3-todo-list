@@ -1,14 +1,14 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        <li class="page-item {{ @page <= 1 ? 'disabled' : '' }}"><a class="page-link"
-                href="{{ 'todo_list' | alias }}?page={{ @page > 1 ? @page - 1 : 1 }}{{ @sort ? '&sort=' . @sort : '' }}">Previous</a></li>
+        <include href="components/pagination-link.htm"
+            with="label=Previous,page={{ @page - 1 }},pages={{ @pages }},additionalParamKeys={{ @additionalParamKeys }},isDisabled={{ @page <= 1 }}" />
 
         <loop from="{{ @i=1 }}" to="{{ @i <= @pages }}" step="{{ @i++ }}">
-            <li class="page-item {{ @i == @page ? 'active' : '' }}"><a class="page-link"
-                    href="{{ 'todo_list' | alias }}?page={{ @i }}{{ @sort ? '&sort=' . @sort : '' }}">{{ @i }}</a></li>
+            <include href="components/pagination-link.htm"
+                with="label={{ @i }},page={{ @i }},pages={{ @pages }},additionalParamKeys={{ @additionalParamKeys }},isActive={{ @i == @page }}" />
         </loop>
 
-        <li class="page-item {{ @page >= @pages ? 'disabled' : '' }}"><a class="page-link"
-                href="{{ 'todo_list' | alias }}?page={{ @page < @pages ? @page + 1 : @pages }}{{ @sort ? '&sort=' . @sort : '' }}">Next</a></li>
+        <include href="components/pagination-link.htm"
+            with="label=Next,page={{ @page + 1 }},pages={{ @pages }},additionalParamKeys={{ @additionalParamKeys }},isDisabled={{ @page >= @pages }}" />
     </ul>
 </nav>
