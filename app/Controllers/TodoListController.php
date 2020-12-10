@@ -113,6 +113,8 @@ class TodoListController
         }
 
         parse_str(file_get_contents("php://input"), $request);
+
+        //TODO validate deadline format
         
         $this->todo->load(['id=?', $params['id']]);
 

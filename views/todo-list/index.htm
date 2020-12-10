@@ -96,7 +96,7 @@
           <span class="text-break">
             {{ @todo['todo'] }}
           </span>
-          <span class="ms-4 text-center me-1" style="white-space: nowrap" id="todo_{{ @todo['id'] }}_deadline">
+          <span data-bs-toggle="tooltip" data-bs-placement="top" title="Click to modify" class="ms-4 text-center me-1 deadline" style="white-space: nowrap" onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)" id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}
           </span>
           <span class="position-absolute" style="top: -14px; right: -25px;">
