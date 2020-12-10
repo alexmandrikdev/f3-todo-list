@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f10da7b535320e170ad53cd1edee58d2",
+    "content-hash": "e39440ad82ba6243590914f30846955d",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -98,6 +98,40 @@
                 }
             ],
             "time": "2020-04-13T13:17:36+00:00"
+        },
+        {
+            "name": "ikkez/f3-flash",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ikkez/f3-flash.git",
+                "reference": "3ba9ca1ddc80a54ff17a069c47c23e32d601c5d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ikkez/f3-flash/zipball/3ba9ca1ddc80a54ff17a069c47c23e32d601c5d6",
+                "reference": "3ba9ca1ddc80a54ff17a069c47c23e32d601c5d6",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Add simple Flash Messages and Flash Keys to PHP Fat-Free Framework",
+            "homepage": "https://github.com/ikkez/f3-middleware",
+            "keywords": [
+                "F3",
+                "fatfree",
+                "flash",
+                "session"
+            ],
+            "time": "2017-12-06T17:50:51+00:00"
         },
         {
             "name": "phpoption/phpoption",
