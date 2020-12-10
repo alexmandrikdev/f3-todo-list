@@ -1,17 +1,15 @@
 <!-- TODO CREATE FORM -->
-<form method="POST">
-  <div class="row mb-2">
-    <repeat group="{{ ['sort', 'hide_completed', 'hide_no_deadline'] }}" value="{{ @key }}">
-      <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
-      <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
-    </repeat>
-    
-    <set todoError="{{ @FLASH->getKey('errors')['todo'] }}"/>
+<form method="POST" class="row my-2">
+  <repeat group="{{ ['sort', 'hide_completed', 'hide_no_deadline'] }}" value="{{ @key }}">
+    <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
+    <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
+  </repeat>
+  
+  <set todoError="{{ @FLASH->getKey('errors')['todo'] }}"/>
 
-    <div class="col-9"><input type="text" name="todo" class="form-control {{ @todoError ? 'is-invalid' : '' }}" required placeholder="New todo"></div>
-    <div class="col-2"><input type="text" name="deadline" class="form-control date-picker" placeholder="Deadline"></div>
-    <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
-  </div>
+  <div class="col-9"><input type="text" name="todo" class="form-control {{ @todoError ? 'is-invalid' : '' }}" required placeholder="New todo"></div>
+  <div class="col-2"><input type="text" name="deadline" class="form-control date-picker" placeholder="Deadline"></div>
+  <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
 </form>
 <check if="{{ @todoError }}"><p class="text-danger mb-0">{{ @todoError }}</p></check>
 
@@ -47,7 +45,7 @@
       <input type="hidden" id="sort" name="sort" value="{{ $_GET['sort'] }}">
 
       <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        <button class="btn dropdown-toggle" type="button" id="sort_drop_down" data-bs-toggle="dropdown"
           aria-expanded="false">
           <check if="{{ $_GET['sort'] }}">
             <true>
@@ -59,7 +57,7 @@
             </false>
           </check>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul class="dropdown-menu" aria-labelledby="sort_drop_down">
           <li><button type="button" class="dropdown-item {{ $_GET['sort'] === 'name' ? 'active' : '' }}"
               onclick="setInputValueAndSubmitForm('#sort', 'name')">Name <i
                 class="fas fa-long-arrow-alt-up"></i></button></li>
@@ -94,9 +92,11 @@
             class="todo" {{
           @todo['completed_at'] ? 'checked' : '' }}>
         </span>
-        <span class="d-flex justify-content-between align-items-center w-100">
-          {{ @todo['todo'] }}
-          <span class="ms-4 text-center" style="white-space: nowrap">
+        <span class="d-flex justify-content-between align-items-center w-100 position-relative">
+          <span class="text-break">
+            {{ @todo['todo'] }}
+          </span>
+          <span class="ms-4 text-center me-1" style="white-space: nowrap">
             {{ @todo['deadline'] }}
           </span>
         </span>
