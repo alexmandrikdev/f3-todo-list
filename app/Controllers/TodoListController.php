@@ -18,8 +18,15 @@ class TodoListController
 
             $order = $_GET['sort'] ?: '';
 
+            $where = 'user_id=?';
+
+            if($_GET['hide_completed'] === 'on') {
+                $where .= ' AND completed_at is null';
+            }
+
             $todos = $this->todo->paginate($page - 1, $take, [
-                'user_id=?', $f3->get('SESSION.userId')
+                $where, 
+                $f3->get('SESSION.userId')
             ], [
                 'order' => $this->determineOrder($order)
             ]);
