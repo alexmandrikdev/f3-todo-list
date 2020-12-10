@@ -11,3 +11,10 @@ $db = new DB\SQL(
 );
 
 $f3->set('DB', $db);
+
+/**
+ * Initialize flash
+ */
+$flash = Flash::instance();
+
+$f3->set('FLASH', $flash);
