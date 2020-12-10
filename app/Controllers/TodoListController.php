@@ -72,8 +72,8 @@ class TodoListController
 
             $this->todo->save();
         } else {
+            $f3->FLASH->setKey('errors', $validator->errors());
         }
-        $f3->set('SESSION.errors', $validator->errors());
 
         $additionalParams = '';
 
