@@ -10,6 +10,13 @@ class Validator
 
     private $f3;
 
+    /**
+     * Attribute name casts for error messages
+     *
+     * @var array
+     */
+    private $attributeCasts = [];
+
     public function __construct(array $inputs, array $inputRules)
     {
         $this->inputs = $inputs;
@@ -45,6 +52,17 @@ class Validator
         return $this->errors;
     }
 
+    /**
+     * Set the attribute casts
+     * 
+     * @param array $casts
+     * @return void 
+     */
+    public function setAttributeCasts(array $casts): void
+    {
+        $this->attributeCasts = $casts;
+    }
+
     private function sanitizeInputs(array $inputs): array
     {
         $sanitizedInputs = [];
@@ -64,7 +82,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$inputName] = "The $inputName is required!";
+        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is required!";
 
         return false;
     }
@@ -79,7 +97,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$inputName] = "The $inputName is too short (min length: $min)!";
+        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is too short (min length: $min)!";
 
         return false;
     }
@@ -94,7 +112,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$inputName] = "The $inputName is too long (max length: $max)!";
+        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " is too long (max length: $max)!";
 
         return false;
     }
@@ -105,17 +123,17 @@ class Validator
 
         echo $confirmationInputName;
 
-        if(!$confirmationInputName){
+        if (!$confirmationInputName) {
             $confirmationInputName = $inputName . "_confirmation";
         }
 
-        if($this->inputs[$inputName] === $this->inputs[$confirmationInputName]){
+        if ($this->inputs[$inputName] === $this->inputs[$confirmationInputName]) {
             return true;
         }
 
-        $this->errors[$inputName] = "The $inputName must be confirmed!";
+        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " must be confirmed!";
 
-        return false;        
+        return false;
     }
 
     private function checkUnique(string $inputName, array $arguments)
@@ -123,13 +141,13 @@ class Validator
         $table = $arguments[0];
         $column = $arguments[1];
 
-        if(!$column){
+        if (!$column) {
             $column = $inputName;
         }
 
         $user = new DB\SQL\Mapper($this->f3->DB, $table);
 
-        if(!$user->exists($column)){
+        if (!$user->exists($column)) {
             $this->f3->error(422, "Unknown column ($column) in $table table");
         }
 
@@ -137,11 +155,11 @@ class Validator
             "$column=?", $this->inputs[$inputName]
         ]);
 
-        if(!$user->id){
+        if (!$user->id) {
             return true;
         }
-        
-        $this->errors[$inputName] = "The $inputName must be unique!";
+
+        $this->errors[$inputName] = "The " . ($this->attributeCasts[$inputName] ?: $inputName) . " must be unique!";
 
         return false;
     }
