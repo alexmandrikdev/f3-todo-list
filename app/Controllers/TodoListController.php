@@ -91,13 +91,21 @@ class TodoListController
 
         parse_str(file_get_contents("php://input"), $request);
 
-        $f3->DB->exec(
-            'UPDATE todos SET completed_at = :completedAt WHERE id=:todoId',
-            [
-                ':completedAt' => $request['completed'] === 'true' ? now() : null,
-                ':todoId' => $request['todoId'],
-            ]
-        );
+        $validator = new Validator($request, [
+            'todoId' => ['required', 'exists:todos,id'],
+        ]);
+
+        if ($validator->validate()) {
+            $f3->DB->exec(
+                'UPDATE todos SET completed_at = :completedAt WHERE id=:todoId',
+                [
+                    ':completedAt' => $request['completed'] === 'true' ? now() : null,
+                    ':todoId' => $request['todoId'],
+                ]
+            );
+        }
+
+        echo json_encode($validator->errors());
     }
 
     /**
@@ -117,7 +125,7 @@ class TodoListController
 
         $validator = new Validator(array_merge($request, $params), [
             'deadline' => ['required', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
-            // 'id' => ['required', 'exists:todos'],
+            'id' => ['required', 'exists:todos'],
         ]);
 
         if ($validator->validate()) {
@@ -127,9 +135,9 @@ class TodoListController
             $this->todo->deadline = $request['deadline'];
 
             $this->todo->update();
-        } else {
-            echo json_encode($validator->errors());
         }
+
+        echo json_encode($validator->errors());
     }
 
     /**

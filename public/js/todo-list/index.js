@@ -6,7 +6,11 @@ function onCompletedCheckboxChange(todoId, element) {
       todoId,
       completed: element.checked,
     },
-    success: () => location.reload(),
+    success: (res) => {
+      // console.log(JSON.parse(res));
+
+      location.reload();
+    },
   });
 }
 
@@ -63,7 +67,11 @@ function saveDeadline(todoId, deadline) {
     data: {
       deadline,
     },
-    success: () => location.reload(),
+    success: (res) => {
+      // console.log(JSON.parse(res));
+
+      location.reload();
+    },
   });
 }
 
