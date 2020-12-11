@@ -114,7 +114,11 @@ let visibleTodoTextareaId = null;
 function showTodoTextarea(todoId) {
   $(`#todo-${todoId}-todo`).addClass("d-none");
 
-  $(`#todo-${todoId}-todo-textarea`).removeClass("d-none");
+  const todoTextarea = $(`#todo-${todoId}-todo-textarea`);
+
+  todoTextarea.removeClass("d-none");
+
+  autosize.update(todoTextarea);
 
   setTimeout(() => (visibleTodoTextareaId = todoId), 100);
 }
@@ -179,3 +183,5 @@ function now() {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:00`;
 }
+
+autosize($("textarea.autosize"));
