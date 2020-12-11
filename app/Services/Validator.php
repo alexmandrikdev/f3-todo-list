@@ -39,7 +39,9 @@ class Validator
                 if (!method_exists('Validator', $functionName)) {
                     $this->f3->error(422, "Invalid validation rule: $rule");
                 } else {
-                    call_user_func([$this, $functionName], $attributeName, $arguments);
+                    if (!call_user_func([$this, $functionName], $attributeName, $arguments)) {
+                        break;
+                    }
                 }
             }
         }
