@@ -103,7 +103,7 @@
         class="todo-item list-group-item d-flex align-items-center {{ @todo['deadline'] && @todo['deadline'] >= !@todo['completed_at'] && now() >= @todo['deadline'] ? 'bg-danger text-white' : '' }}">
 
         <!-- COMPLETED CHECKBOX -->
-        <span class="me-2">
+        <span class="me-3">
           <input onchange="onCompletedCheckboxChange({{ @todo['id'] }}, this)" type="checkbox" name="{{ @todo['id'] }}"
             class="todo" {{
           @todo['completed_at'] ? 'checked' : '' }}>
@@ -112,7 +112,7 @@
         <span class="d-flex justify-content-between align-items-center w-100 position-relative">
           <!-- TODO -->
           <div class="text-break w-100">
-            <div id="todo-{{ @todo['id'] }}-todo" onclick="showTodoTextarea({{ @todo['id'] }})">
+            <div id="todo-{{ @todo['id'] }}-todo" onclick="showTodoTextarea({{ @todo['id'] }})" class="py-1">
               {{ @todo['todo'] }}
             </div>
 
