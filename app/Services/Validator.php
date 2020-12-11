@@ -29,6 +29,13 @@ class Validator
     public function validate(): bool
     {
         foreach ($this->attributeRules as $attributeName => $rules) {
+            usort($rules, function ($a, $b) {
+                if ($b === 'nullable') {
+                    return 1;
+                }
+                return -1;
+            });
+
             foreach ($rules as $rule) {
                 [$rule, $arguments] = explode(':', $rule, 2);
 
