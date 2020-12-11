@@ -40,18 +40,21 @@ function addDeadlineToTodo(todoId) {
 let tmpDatepickerExists = false;
 
 /**
- * Set the element's innerHTML to a datepicker. And set the datepicker's defaultDate and onClose options.
+ * Set the element's innerHTML to a datepicker. Set the datepicker's defaultDate
+ * and onClose options. And open the datepicker
  *
  * @param {int} todoId
  * @param {string} deadline
  * @param {object} element
  */
 function addDatepicker(todoId, deadline, element) {
+  $(".tooltip").hide();
+
   element.innerHTML = `<input type="text" id="tmp-date-picker" style="width: 150px;" class="form-control date-picker">`;
 
   tmpDatepickerExists = true;
 
-  initializeFlatpickr("#tmp-date-picker", {
+  const datepicker = initializeFlatpickr("#tmp-date-picker", {
     defaultDate: deadline,
     onClose: (selectedDates, dateStr) => {
       if (deadline !== dateStr) {
@@ -59,6 +62,8 @@ function addDatepicker(todoId, deadline, element) {
       }
     },
   });
+
+  setTimeout(() => datepicker.open(), 100);
 }
 
 function saveDeadline(todoId, deadline) {
