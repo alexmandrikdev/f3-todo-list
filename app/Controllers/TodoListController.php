@@ -146,6 +146,37 @@ class TodoListController
     }
 
     /**
+     * Update todo
+     * 
+     * @param Base $f3 
+     * @param array $params 
+     * @return void 
+     */
+    public function updateTodo(Base $f3, array $params): void
+    {
+        if (!$f3->exists('SESSION.userId')) {
+            $f3->error(401, 'Unauthorized');
+        }
+
+        parse_str(file_get_contents("php://input"), $request);
+
+        $validator = new Validator(array_merge($request, $params), [
+            'todo' => ['required', 'max:255'],
+            'id' => ['required', 'exists:todos'],
+        ]);
+
+        if ($validator->validate()) {
+            $this->todo->load(['id=?', $params['id']]);
+
+            $this->todo->todo = $request['todo'];
+
+            $this->todo->update();
+        }
+
+        echo json_encode($validator->errors());
+    }
+
+    /**
      * Determine the order based on the $order param
      * 
      * @param string $order 

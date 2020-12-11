@@ -115,6 +115,21 @@ function hideTodoTextarea(todoId) {
   visibleTodoTextareaId = null;
 }
 
+function saveTodo(todoId, todo) {
+  $.ajax({
+    url: `/todos/${todoId}/updateTodo`,
+    type: "PUT",
+    data: {
+      todo,
+    },
+    success: (res) => {
+      console.log(JSON.parse(res));
+
+      location.reload();
+    },
+  });
+}
+
 $(document).click(({ target }) => {
   if (!target.classList.contains("todo-textarea") && visibleTodoTextareaId) {
     hideTodoTextarea(visibleTodoTextareaId);

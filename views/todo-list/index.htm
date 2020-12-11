@@ -106,7 +106,7 @@
             </div>
 
             <textarea rows="3" id="todo-{{ @todo['id'] }}-todo-textarea"
-              class="form-control d-none todo-textarea">{{ @todo['todo'] }}</textarea>
+              class="form-control d-none todo-textarea" onchange="saveTodo({{ @todo['id'] }}, this.value)">{{ @todo['todo'] }}</textarea>
           </div>
 
           <!-- DEADLINE -->
