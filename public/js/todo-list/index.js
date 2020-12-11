@@ -18,6 +18,7 @@ function initializeFlatpickr(selector, additionalOptions = {}) {
   return flatpickr(selector, {
     enableTime: true,
     dateFormat: "Y-m-d H:i:S",
+    time_24hr: true,
     ...additionalOptions,
   });
 }
