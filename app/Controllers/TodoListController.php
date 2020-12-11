@@ -66,7 +66,7 @@ class TodoListController
 
         $validator = new Validator($_POST, [
             'todo' => ['required', 'max:255'],
-            'deadline' => ['required', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
+            'deadline' => ['nullable', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
         ]);
 
         if ($validator->validate()) {
