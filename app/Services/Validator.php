@@ -30,7 +30,7 @@ class Validator
     {
         foreach ($this->attributeRules as $attributeName => $rules) {
             foreach ($rules as $rule) {
-                [$rule, $arguments] = explode(':', $rule);
+                [$rule, $arguments] = explode(':', $rule, 2);
 
                 $arguments = explode(',', $arguments);
 
@@ -160,6 +160,30 @@ class Validator
         }
 
         $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " must be unique!";
+
+        return false;
+    }
+
+    /**
+     * Validate the $this->arguments[$attributeName] format.
+     * 
+     * @param string $attributeName 
+     * @param array $arguments 
+     * @return bool 
+     */
+    private function validateFormat(string $attributeName, array $arguments): bool 
+    {
+        $regexp = "/" . $arguments[0] . "/";
+
+        if(!$regexp) {
+            $this->f3->error(422, "Too few arguments passed! Regular expression argument required!");
+        }
+
+        if(preg_match($regexp, $this->attributes[$attributeName])){
+            return true;
+        }
+
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " must be match the regexp pattern: $arguments[0]";
 
         return false;
     }
