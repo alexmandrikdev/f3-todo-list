@@ -147,9 +147,7 @@ class Validator
 
         $mapper = createSQLMapper($table);
 
-        if (!$mapper->exists($column)) {
-            $this->f3->error(422, "Unknown column ($column) in $table table");
-        }
+        checkIfColumnExistsInMapper($mapper, $column);
 
         $mapper->load([
             "$column=?", $this->attributes[$attributeName]
