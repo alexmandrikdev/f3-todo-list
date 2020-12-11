@@ -186,6 +186,37 @@ class Validator
         return false;
     }
 
+    /**
+     * Return true if the attribute is exist in the database, otherwise return false.
+     * 
+     * @param string $attributeName 
+     * @param array $arguments 
+     * @return bool 
+     */
+    private function validateExists(string $attributeName, array $arguments): bool 
+    {
+        $table = $arguments[0];
+
+        $column = $arguments[1] ?: $attributeName;
+
+        $mapper = createSQLMapper($table);
+        
+        checkIfColumnExistsInMapper($mapper, $column);
+
+        $mapper->load([
+            "$column=?",
+            $this->attributes[$attributeName]
+        ]);
+
+        if(!$mapper->dry()) {
+            return true;
+        }
+
+        $this->errors[$attributeName] = "This $column (".$this->attributes[$attributeName].") dosn't exist in the $table table";
+
+        return false;
+    }
+
     private function determineAttributeNameForErrorMessage($attributeName)
     {
         return $this->attributeCasts[$attributeName] ?: $attributeName;
