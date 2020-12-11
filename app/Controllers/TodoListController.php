@@ -93,6 +93,7 @@ class TodoListController
 
         $validator = new Validator($request, [
             'todoId' => ['required', 'exists:todos,id'],
+            'completed' => ['required'],
         ]);
 
         if ($validator->validate()) {
