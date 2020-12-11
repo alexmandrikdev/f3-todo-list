@@ -76,6 +76,11 @@ class Validator
         return $sanitizedInputs;
     }
 
+    private function validateNullable(string $attributeName): bool
+    {
+        return $this->attributes[$attributeName] != null;
+    }
+
     private function validateRequired(string $attributeName): bool
     {
         $attribute = $this->attributes[$attributeName];
