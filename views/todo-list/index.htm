@@ -105,8 +105,7 @@
           </span>
 
           <!-- DEADLINE -->
-          <span data-bs-toggle="tooltip" data-bs-placement="top" title="Click to modify"
-            class="ms-4 text-center me-1 deadline" style="white-space: nowrap"
+          <span class="ms-4 text-center me-1 deadline" style="white-space: nowrap"
             onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)"
             id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}

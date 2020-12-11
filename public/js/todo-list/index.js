@@ -48,8 +48,6 @@ let tmpDatepickerExists = false;
  * @param {object} element
  */
 function addDatepicker(todoId, deadline, element) {
-  $(".tooltip").hide();
-
   element.innerHTML = `<input type="text" id="tmp-date-picker" style="width: 150px;" class="form-control date-picker">`;
 
   tmpDatepickerExists = true;
@@ -130,13 +128,3 @@ function now() {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:00`;
 }
-
-/**
- * Enable tooltip for all elements.
- */
-var tooltipTriggerList = [].slice.call(
-  document.querySelectorAll('[data-bs-toggle="tooltip"]')
-);
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl);
-});
