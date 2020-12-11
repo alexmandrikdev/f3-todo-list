@@ -97,6 +97,30 @@ $(document).click(({ target }) => {
   }
 });
 
+let visibleTodoTextareaId = null;
+
+function showTodoTextarea(todoId) {
+  $(`#todo-${todoId}-todo`).addClass("d-none");
+
+  $(`#todo-${todoId}-todo-textarea`).removeClass("d-none");
+
+  setTimeout(() => (visibleTodoTextareaId = todoId), 100);
+}
+
+function hideTodoTextarea(todoId) {
+  $(`#todo-${todoId}-todo`).removeClass("d-none");
+
+  $(`#todo-${todoId}-todo-textarea`).addClass("d-none");
+
+  visibleTodoTextareaId = null;
+}
+
+$(document).click(({ target }) => {
+  if (!target.classList.contains("todo-textarea") && visibleTodoTextareaId) {
+    hideTodoTextarea(visibleTodoTextareaId);
+  }
+});
+
 function now() {
   let today = new Date();
 
