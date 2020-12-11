@@ -82,7 +82,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " is required!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " field is required!";
 
         return false;
     }
