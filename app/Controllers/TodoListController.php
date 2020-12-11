@@ -20,16 +20,16 @@ class TodoListController
 
             $where = 'user_id=?';
 
-            if($_GET['hide_completed'] === 'on') {
+            if ($_GET['hide_completed'] === 'on') {
                 $where .= ' AND completed_at is null';
             }
 
-            if($_GET['hide_no_deadline'] === 'on') {
+            if ($_GET['hide_no_deadline'] === 'on') {
                 $where .= ' AND deadline is not null';
             }
 
             $todos = $this->todo->paginate($page - 1, $take, [
-                $where, 
+                $where,
                 $f3->get('SESSION.userId')
             ], [
                 'order' => $this->determineOrder($order)
@@ -56,7 +56,8 @@ class TodoListController
         }
 
         $validator = new Validator($_POST, [
-            'todo' => ['required', 'max:255']
+            'todo' => ['required', 'max:255'],
+            'deadline' => ['required', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
         ]);
 
         if ($validator->validate()) {
@@ -114,13 +115,21 @@ class TodoListController
 
         parse_str(file_get_contents("php://input"), $request);
 
-        //TODO validate deadline format
-        
-        $this->todo->load(['id=?', $params['id']]);
+        $validator = new Validator(array_merge($request, $params), [
+            'deadline' => ['required', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
+            // 'id' => ['required', 'exists:todos'],
+        ]);
 
-        $this->todo->deadline = $request['deadline'];
+        if ($validator->validate()) {
 
-        $this->todo->update();
+            $this->todo->load(['id=?', $params['id']]);
+
+            $this->todo->deadline = $request['deadline'];
+
+            $this->todo->update();
+        } else {
+            echo json_encode($validator->errors());
+        }
     }
 
     /**
@@ -151,7 +160,7 @@ class TodoListController
             case 'add_date':
                 return 'id';
                 break;
-            
+
             default:
                 return 'id DESC';
                 break;
