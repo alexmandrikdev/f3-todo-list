@@ -34,7 +34,7 @@ class Validator
 
                 $arguments = explode(',', $arguments);
 
-                $functionName = "check" . ucfirst($rule);
+                $functionName = "validate" . ucfirst($rule);
 
                 if (!method_exists('Validator', $functionName)) {
                     $this->f3->error(422, "Invalid validation rule: $rule");
@@ -74,7 +74,7 @@ class Validator
         return $sanitizedInputs;
     }
 
-    private function checkRequired(string $attributeName): bool
+    private function validateRequired(string $attributeName): bool
     {
         $attribute = $this->attributes[$attributeName];
 
@@ -87,7 +87,7 @@ class Validator
         return false;
     }
 
-    private function checkMin(string $attributeName, array $arguments): bool
+    private function validateMin(string $attributeName, array $arguments): bool
     {
         $min = $arguments[0];
 
@@ -102,7 +102,7 @@ class Validator
         return false;
     }
 
-    private function checkMax(string $attributeName, array $arguments): bool
+    private function validateMax(string $attributeName, array $arguments): bool
     {
         $max = $arguments[0];
 
@@ -117,7 +117,7 @@ class Validator
         return false;
     }
 
-    private function checkConfirmed(string $attributeName, array $arguments): bool
+    private function validateConfirmed(string $attributeName, array $arguments): bool
     {
         $confirmationInputName = $arguments[0];
 
@@ -136,7 +136,7 @@ class Validator
         return false;
     }
 
-    private function checkUnique(string $attributeName, array $arguments)
+    private function validateUnique(string $attributeName, array $arguments): bool
     {
         $table = $arguments[0];
         $column = $arguments[1];
