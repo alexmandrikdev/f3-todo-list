@@ -4,14 +4,17 @@
     <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
     <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
   </repeat>
-  
-  <set todoError="{{ @FLASH->getKey('errors')['todo'] }}"/>
 
-  <div class="col-9"><input type="text" name="todo" class="form-control {{ @todoError ? 'is-invalid' : '' }}" required placeholder="New todo"></div>
+  <set todoError="{{ @FLASH->getKey('errors')['todo'] }}" />
+
+  <div class="col-9"><input type="text" name="todo" class="form-control {{ @todoError ? 'is-invalid' : '' }}" required
+      placeholder="New todo"></div>
   <div class="col-2"><input type="text" name="deadline" class="form-control date-picker" placeholder="Deadline"></div>
   <div class="col-1"><input type="submit" class="btn btn-primary" value="Add"></div>
 </form>
-<check if="{{ @todoError }}"><p class="text-danger mb-0">{{ @todoError }}</p></check>
+<check if="{{ @todoError }}">
+  <p class="text-danger mb-0">{{ @todoError }}</p>
+</check>
 
 <check if="{{ $_GET['page'] <= @todos['count'] }}">
   <!-- LISTING OPTIONS FORM -->
@@ -102,19 +105,24 @@
           </span>
 
           <!-- DEADLINE -->
-          <span data-bs-toggle="tooltip" data-bs-placement="top" title="Click to modify" class="ms-4 text-center me-1 deadline" style="white-space: nowrap" onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)" id="todo_{{ @todo['id'] }}_deadline">
+          <span data-bs-toggle="tooltip" data-bs-placement="top" title="Click to modify"
+            class="ms-4 text-center me-1 deadline" style="white-space: nowrap"
+            onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)"
+            id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}
           </span>
 
           <!-- OPTIONS BUTTON -->
           <span class="position-absolute options-btn invisible" style="top: -14px; right: -25px;">
             <div class="dropdown">
-              <button class="btn" type="button todo_options_dropdown" id="todo_{{ @todo['id'] }}_options_dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn" type="button todo_options_dropdown" id="todo_{{ @todo['id'] }}_options_dropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-ellipsis-v"></i>
               </button>
               <ul class="dropdown-menu" aria-labelledby="todo_{{ @todo['id'] }}_options_dropdown">
                 <check if="{{ !@todo['deadline'] }}">
-                  <li><button class="dropdown-item" type="button" onclick="addDeadlineToTodo({{ @todo['id'] }})">Add deadline</button></li>
+                  <li><button class="dropdown-item" type="button" onclick="addDeadlineToTodo({{ @todo['id'] }})">Add
+                      deadline</button></li>
                 </check>
               </ul>
             </div>
