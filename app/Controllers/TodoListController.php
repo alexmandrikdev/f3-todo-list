@@ -41,6 +41,10 @@ class TodoListController
                 $f3->BASE . '/js/todo-list/index.js'
             ]);
 
+            $f3->set('extraStyles', [
+                $f3->BASE . '/css/todo-list/index.css'
+            ]);
+
             $f3->set('view', 'todo-list/index.htm');
         } else {
             $f3->set('view', 'unauthorized.htm');

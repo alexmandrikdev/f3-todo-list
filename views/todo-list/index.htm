@@ -86,7 +86,7 @@
   <ul class="list-group">
     <repeat group="{{ @todos['subset'] }}" value="{{ @todo }}">
       <li
-        class="list-group-item d-flex align-items-center {{ @todo['deadline'] && @todo['deadline'] >= !@todo['completed_at'] && now() >= @todo['deadline'] ? 'bg-danger text-white' : '' }}">
+        class="todo-item list-group-item d-flex align-items-center {{ @todo['deadline'] && @todo['deadline'] >= !@todo['completed_at'] && now() >= @todo['deadline'] ? 'bg-danger text-white' : '' }}">
         <span class="me-2">
           <input onchange="onCompletedCheckboxChange({{ @todo['id'] }}, this)" type="checkbox" name="{{ @todo['id'] }}"
             class="todo" {{
@@ -99,7 +99,7 @@
           <span data-bs-toggle="tooltip" data-bs-placement="top" title="Click to modify" class="ms-4 text-center me-1 deadline" style="white-space: nowrap" onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)" id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}
           </span>
-          <span class="position-absolute" style="top: -14px; right: -25px;">
+          <span class="position-absolute options-btn invisible" style="top: -14px; right: -25px;">
             <div class="dropdown">
               <button class="btn" type="button todo_options_dropdown" id="todo_{{ @todo['id'] }}_options_dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-ellipsis-v"></i>
