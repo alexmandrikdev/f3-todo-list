@@ -171,15 +171,15 @@ class Validator
      * @param array $arguments 
      * @return bool 
      */
-    private function validateFormat(string $attributeName, array $arguments): bool 
+    private function validateFormat(string $attributeName, array $arguments): bool
     {
         $regexp = "/" . $arguments[0] . "/";
 
-        if(!$regexp) {
+        if (!$regexp) {
             $this->f3->error(422, "Too few arguments passed! Regular expression argument required!");
         }
 
-        if(preg_match($regexp, $this->attributes[$attributeName])){
+        if (preg_match($regexp, $this->attributes[$attributeName])) {
             return true;
         }
 
@@ -195,14 +195,14 @@ class Validator
      * @param array $arguments 
      * @return bool 
      */
-    private function validateExists(string $attributeName, array $arguments): bool 
+    private function validateExists(string $attributeName, array $arguments): bool
     {
         $table = $arguments[0];
 
         $column = $arguments[1] ?: $attributeName;
 
         $mapper = createSQLMapper($table);
-        
+
         checkIfColumnExistsInMapper($mapper, $column);
 
         $mapper->load([
@@ -210,11 +210,11 @@ class Validator
             $this->attributes[$attributeName]
         ]);
 
-        if(!$mapper->dry()) {
+        if (!$mapper->dry()) {
             return true;
         }
 
-        $this->errors[$attributeName] = "This $column (".$this->attributes[$attributeName].") dosn't exist in the $table table";
+        $this->errors[$attributeName] = "This $column (" . $this->attributes[$attributeName] . ") dosn't exist in the $table table";
 
         return false;
     }
