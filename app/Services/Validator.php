@@ -82,7 +82,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is required!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " is required!";
 
         return false;
     }
@@ -97,7 +97,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is too short (min length: $min)!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " is too short (min length: $min)!";
 
         return false;
     }
@@ -112,7 +112,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " is too long (max length: $max)!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " is too long (max length: $max)!";
 
         return false;
     }
@@ -131,7 +131,7 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " must be confirmed!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " must be confirmed!";
 
         return false;
     }
@@ -159,8 +159,13 @@ class Validator
             return true;
         }
 
-        $this->errors[$attributeName] = "The " . ($this->attributeCasts[$attributeName] ?: $attributeName) . " must be unique!";
+        $this->errors[$attributeName] = "The " . $this->determineAttributeNameForErrorMessage($attributeName) . " must be unique!";
 
         return false;
+    }
+
+    private function determineAttributeNameForErrorMessage($attributeName)
+    {
+        return $this->attributeCasts[$attributeName] ?: $attributeName;
     }
 }
