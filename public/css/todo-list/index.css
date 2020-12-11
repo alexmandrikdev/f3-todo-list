@@ -1,3 +1,8 @@
-.todo-item:hover .options-btn {
+.todo-item:hover .options-btn,
+.todo-item:hover .click-to-edit-badge {
   visibility: visible !important;
+}
+
+.click-to-edit-badge {
+  top: -10px;
 }
