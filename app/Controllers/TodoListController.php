@@ -18,20 +18,25 @@ class TodoListController
 
             $order = $_GET['sort'] ?: '';
 
-            $where = 'user_id=?';
+            $filter['0'] = 'user_id=:user_id';
+
+            $filter[':user_id'] = $f3->get('SESSION.userId');
 
             if ($_GET['hide_completed'] === 'on') {
-                $where .= ' AND completed_at is null';
+                $filter['0'] .= ' AND completed_at is null';
             }
 
             if ($_GET['hide_no_deadline'] === 'on') {
-                $where .= ' AND deadline is not null';
+                $filter['0'] .= ' AND deadline is not null';
             }
 
-            $todos = $this->todo->paginate($page - 1, $take, [
-                $where,
-                $f3->get('SESSION.userId')
-            ], [
+            if ($_GET['todo_filter']) {
+                $filter['0'] .= ' AND todo LIKE :todo_filter';
+                
+                $filter[':todo_filter'] = "%" . $_GET['todo_filter'] . "%";
+            }
+
+            $todos = $this->todo->paginate($page - 1, $take, $filter, [
                 'order' => $this->determineOrder($order)
             ]);
 

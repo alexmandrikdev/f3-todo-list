@@ -1,6 +1,6 @@
 <!-- TODO CREATE FORM -->
 <form method="POST" class="row my-2">
-  <repeat group="{{ ['sort', 'hide_completed', 'hide_no_deadline'] }}" value="{{ @key }}">
+  <repeat group="{{ ['sort', 'hide_completed', 'hide_no_deadline', 'todo_filter'] }}" value="{{ @key }}">
     <input type="hidden" name="additional_param_keys[]" value="{{ @key }}">
     <input type="hidden" name="{{ @key }}" value="{{ $_GET[@key] }}">
   </repeat>
@@ -19,7 +19,11 @@
 <check if="{{ $_GET['page'] <= @todos['count'] }}">
   <!-- LISTING OPTIONS FORM -->
   <form class="row mb-2">
-    <div class="col-5"></div>
+    <!-- TODO FILTER -->
+    <div class="col-5">
+      <input type="text" class="form-control" name="todo_filter" placeholder="Type to filter"
+        onchange="this.form.submit()" value="{{ $_GET['todo_filter'] }}">
+    </div>
 
     <!-- HIDE NO DEADLINE -->
     <div class="col-2 d-flex align-items-center">
@@ -105,8 +109,8 @@
               {{ @todo['todo'] }}
             </div>
 
-            <textarea rows="3" id="todo-{{ @todo['id'] }}-todo-textarea"
-              class="form-control d-none todo-textarea" onchange="saveTodo({{ @todo['id'] }}, this.value)">{{ @todo['todo'] }}</textarea>
+            <textarea rows="3" id="todo-{{ @todo['id'] }}-todo-textarea" class="form-control d-none todo-textarea"
+              onchange="saveTodo({{ @todo['id'] }}, this.value)">{{ @todo['todo'] }}</textarea>
           </div>
 
           <!-- DEADLINE -->
@@ -133,7 +137,8 @@
           </span>
 
           <!-- CLICK TO EDIT BADGE -->
-          <div class="position-absolute start-50 translate-middle click-to-edit-badge badge bg-light text-dark invisible">
+          <div
+            class="position-absolute start-50 translate-middle click-to-edit-badge badge bg-light text-dark invisible">
             Click to edit
           </div>
         </span>
@@ -145,5 +150,5 @@
 <!-- PAGINATION -->
 <div class="d-flex justify-content-center mt-5">
   <include href="components/pagination.htm"
-    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},additionalParamKeys=sort&hide_completed&hide_no_deadline" />
+    with="pages={{ @todos['count'] }},page={{ $_GET['page'] ?: 1 }},additionalParamKeys=sort&hide_completed&hide_no_deadline,todo_filter" />
 </div>
