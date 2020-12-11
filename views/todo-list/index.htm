@@ -118,6 +118,7 @@
 
             <textarea id="todo-{{ @todo['id'] }}-todo-textarea" class="form-control d-none todo-textarea autosize"
               onchange="saveTodo({{ @todo['id'] }}, this.value)">{{ @todo['todo'] }}</textarea>
+            <div id="todo-{{ @todo['id'] }}-todo-textarea-error" class="text-danger"></div>
           </div>
 
           <!-- DEADLINE -->

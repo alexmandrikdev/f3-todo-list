@@ -32,7 +32,7 @@ class TodoListController
 
             if ($_GET['todo_filter']) {
                 $filter['0'] .= ' AND todo LIKE :todo_filter';
-                
+
                 $filter[':todo_filter'] = "%" . $_GET['todo_filter'] . "%";
             }
 
@@ -176,9 +176,9 @@ class TodoListController
             $this->todo->todo = $request['todo'];
 
             $this->todo->update();
+        } else {
+            $f3->error(422, json_encode($validator->errors()));
         }
-
-        echo json_encode($validator->errors());
     }
 
     /**

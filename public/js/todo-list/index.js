@@ -131,7 +131,11 @@ function hideTodoTextarea(todoId) {
   visibleTodoTextareaId = null;
 }
 
+let todoSavingInProgress = false;
+
 function saveTodo(todoId, todo) {
+  todoSavingInProgress = true;
+
   $.ajax({
     url: `/todos/${todoId}/updateTodo`,
     type: "PUT",
@@ -139,15 +143,25 @@ function saveTodo(todoId, todo) {
       todo,
     },
     success: (res) => {
-      console.log(JSON.parse(res));
-
       location.reload();
+    },
+    error: (error) => {
+      const errors = JSON.parse(JSON.parse(error.responseText).text);
+
+      if (errors["todo"]) {
+        $(`#todo-${todoId}-todo-textarea`).addClass("is-invalid");
+        $(`#todo-${todoId}-todo-textarea-error`).html(errors["todo"]);
+      }
     },
   });
 }
 
 $(document).click(({ target }) => {
-  if (!target.classList.contains("todo-textarea") && visibleTodoTextareaId) {
+  if (
+    !target.classList.contains("todo-textarea") &&
+    visibleTodoTextareaId &&
+    !todoSavingInProgress
+  ) {
     hideTodoTextarea(visibleTodoTextareaId);
   }
 });
