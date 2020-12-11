@@ -111,7 +111,7 @@
 
           <!-- DEADLINE -->
           <span class="ms-4 text-center me-1 deadline" style="white-space: nowrap"
-            onclick="addDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)"
+            onclick="createTempDatepicker({{ @todo['id'] }}, '{{ @todo['deadline'] }}', this)"
             id="todo_{{ @todo['id'] }}_deadline">
             {{ @todo['deadline'] }}
           </span>

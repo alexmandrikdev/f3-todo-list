@@ -40,14 +40,19 @@ function addDeadlineToTodo(todoId) {
 let tmpDatepickerExists = false;
 
 /**
- * Set the element's innerHTML to a datepicker. Set the datepicker's defaultDate
- * and onClose options. And open the datepicker
+ * Remove the existing datepicker.
+ * Set the element's innerHTML to a datepicker.
+ * Set the datepicker's defaultDate and onClose options. And open the datepicker
  *
  * @param {int} todoId
  * @param {string} deadline
  * @param {object} element
  */
-function addDatepicker(todoId, deadline, element) {
+function createTempDatepicker(todoId, deadline, element) {
+  if ($("#tmp-date-picker").length) {
+    removeTempDatepicker();
+  }
+
   element.innerHTML = `<input type="text" id="tmp-date-picker" style="width: 150px;" class="form-control date-picker">`;
 
   tmpDatepickerExists = true;
@@ -62,6 +67,17 @@ function addDatepicker(todoId, deadline, element) {
   });
 
   setTimeout(() => datepicker.open(), 100);
+}
+
+/**
+ * Remove the temporary datepicker
+ */
+function removeTempDatepicker() {
+  const tmpDatepicker = $("#tmp-date-picker");
+
+  let deadline = tmpDatepicker.val();
+
+  tmpDatepicker.closest(".deadline").html(deadline);
 }
 
 function saveDeadline(todoId, deadline) {
@@ -89,11 +105,7 @@ $(document).click(({ target }) => {
     !$(target).closest(".flatpickr-calendar").length &&
     tmpDatepickerExists
   ) {
-    const tmpDatepicker = $("#tmp-date-picker");
-
-    let deadline = tmpDatepicker.val();
-
-    tmpDatepicker.closest(".deadline").html(deadline);
+    removeTempDatepicker();
   }
 });
 
