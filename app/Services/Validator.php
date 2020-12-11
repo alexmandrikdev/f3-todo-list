@@ -145,15 +145,7 @@ class Validator
             $column = $attributeName;
         }
 
-        try {
-            $mapper = new DB\SQL\Mapper($this->f3->DB, $table);
-        } catch (\PDOException $exception) {
-            if($exception->getCode() === '42S02'){
-                $this->f3->error(422, "Unknown table: $table in the database");
-            }
-            $this->f3->error(500, $exception);
-        }
-        
+        $mapper = createSQLMapper($table);
 
         if (!$mapper->exists($column)) {
             $this->f3->error(422, "Unknown column ($column) in $table table");
