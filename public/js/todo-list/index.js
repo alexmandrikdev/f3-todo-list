@@ -84,10 +84,11 @@ function saveDeadline(todoId, deadline) {
 /**
  * Remove the temporary datepicker if clicked outside
  */
-$(document).click((e) => {
+$(document).click(({ target }) => {
   if (
-    e.target.id !== "tmp-date-picker" &&
-    !e.target.classList.contains("deadline") &&
+    target.id !== "tmp-date-picker" &&
+    !target.classList.contains("deadline") &&
+    !$(target).closest(".flatpickr-calendar").length &&
     tmpDatepickerExists
   ) {
     const tmpDatepicker = $("#tmp-date-picker");
