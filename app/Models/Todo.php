@@ -42,6 +42,17 @@ class Todo extends DB\SQL\Mapper
         ]);
     }
 
+    function create()
+    {
+        $this->todo = $_POST['todo'];
+
+        $this->deadline = $_POST['deadline'] ?: null;
+
+        $this->user_id = $this->f3->get('SESSION.userId');
+
+        $this->save();
+    }
+
     /**
      * Determine the order based on the $order param
      * 

@@ -43,13 +43,7 @@ class TodoListController
         ]);
 
         if ($validator->validate()) {
-            $this->todo->todo = $_POST['todo'];
-
-            $this->todo->deadline = $_POST['deadline'] ?: null;
-
-            $this->todo->user_id = $f3->get('SESSION.userId');
-
-            $this->todo->save();
+            $this->todo->create();
         } else {
             $f3->FLASH->setKey('errors', $validator->errors());
         }
