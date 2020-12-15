@@ -59,7 +59,7 @@ class TodoListController
         $f3->reroute("@todo_list$additionalParams", true);
     }
 
-    public function toggleCompleted(Base $f3)
+    public function toggleCompleted()
     {
         parse_str(file_get_contents("php://input"), $request);
 
@@ -69,12 +69,11 @@ class TodoListController
         ]);
 
         if ($validator->validate()) {
-            $f3->DB->exec(
-                'UPDATE todos SET completed_at = :completedAt WHERE id=:todoId',
-                [
-                    ':completedAt' => $request['completed'] === 'true' ? now() : null,
-                    ':todoId' => $request['todoId'],
-                ]
+            $this->todo->updateOneField(
+                'completed_at',
+                $request['completed'] === 'true' ? now() : null,
+                $request['todoId']
+
             );
         }
 
@@ -98,12 +97,7 @@ class TodoListController
         ]);
 
         if ($validator->validate()) {
-
-            $this->todo->load(['id=?', $params['id']]);
-
-            $this->todo->deadline = $request['deadline'];
-
-            $this->todo->update();
+            $this->todo->updateOneField('deadline', $request['deadline'], $params['id']);
         }
 
         echo json_encode($validator->errors());
@@ -126,11 +120,7 @@ class TodoListController
         ]);
 
         if ($validator->validate()) {
-            $this->todo->load(['id=?', $params['id']]);
-
-            $this->todo->todo = $request['todo'];
-
-            $this->todo->update();
+            $this->todo->updateOneField('todo', $request['todo'], $params['id']);
         } else {
             $f3->error(422, json_encode($validator->errors()));
         }

@@ -53,6 +53,15 @@ class Todo extends DB\SQL\Mapper
         $this->save();
     }
 
+    function updateOneField(string $fieldName, $fieldValue, int $todoId)
+    {
+        $this->load(['id=?', $todoId]);
+
+        $this->set($fieldName, $fieldValue);
+
+        $this->update();
+    }
+
     /**
      * Determine the order based on the $order param
      * 
