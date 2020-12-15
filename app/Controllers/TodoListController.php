@@ -35,7 +35,9 @@ class TodoListController
     public function store(Base $f3)
     {
         if (!$f3->exists('SESSION.userId')) {
-            $f3->error(401, 'Unauthorized');
+            $f3->set('view', 'unauthorized.htm');
+            echo Template::instance()->render('layout.htm');
+            return;
         }
 
         $validator = new Validator($_POST, [
@@ -69,7 +71,9 @@ class TodoListController
     public function toggleCompleted(Base $f3)
     {
         if (!$f3->exists('SESSION.userId')) {
-            $f3->error(401, 'Unauthorized');
+            $f3->set('view', 'unauthorized.htm');
+            echo Template::instance()->render('layout.htm');
+            return;
         }
 
         parse_str(file_get_contents("php://input"), $request);
@@ -102,7 +106,9 @@ class TodoListController
     public function updateDeadline(Base $f3, array $params): void
     {
         if (!$f3->exists('SESSION.userId')) {
-            $f3->error(401, 'Unauthorized');
+            $f3->set('view', 'unauthorized.htm');
+            echo Template::instance()->render('layout.htm');
+            return;
         }
 
         parse_str(file_get_contents("php://input"), $request);
@@ -134,7 +140,9 @@ class TodoListController
     public function updateTodo(Base $f3, array $params): void
     {
         if (!$f3->exists('SESSION.userId')) {
-            $f3->error(401, 'Unauthorized');
+            $f3->set('view', 'unauthorized.htm');
+            echo Template::instance()->render('layout.htm');
+            return;
         }
 
         parse_str(file_get_contents("php://input"), $request);
