@@ -9,37 +9,34 @@ class TodoListController
         $this->todo = new Todo();
     }
 
+    function beforeRoute(Base $f3)
+    {
+        if (!$f3->exists('SESSION.userId')) {
+            $f3->reroute('@unauthorized', true);
+        }
+    }
+
     public function index(Base $f3): void
     {
-        if ($f3->exists('SESSION.userId')) {
-            $todos = $this->todo->getForIndex();
+        $todos = $this->todo->getForIndex();
 
-            $f3->set('todos', $todos);
+        $f3->set('todos', $todos);
 
-            $f3->set('extraScripts', [
-                $f3->BASE . '/js/todo-list/index.js'
-            ]);
+        $f3->set('extraScripts', [
+            $f3->BASE . '/js/todo-list/index.js'
+        ]);
 
-            $f3->set('extraStyles', [
-                $f3->BASE . '/css/todo-list/index.css'
-            ]);
+        $f3->set('extraStyles', [
+            $f3->BASE . '/css/todo-list/index.css'
+        ]);
 
-            $f3->set('view', 'todo-list/index.htm');
-        } else {
-            $f3->set('view', 'unauthorized.htm');
-        }
+        $f3->set('view', 'todo-list/index.htm');
 
         echo Template::instance()->render('layout.htm');
     }
 
     public function store(Base $f3)
     {
-        if (!$f3->exists('SESSION.userId')) {
-            $f3->set('view', 'unauthorized.htm');
-            echo Template::instance()->render('layout.htm');
-            return;
-        }
-
         $validator = new Validator($_POST, [
             'todo' => ['required', 'max:255'],
             'deadline' => ['nullable', 'format:^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'],
@@ -70,12 +67,6 @@ class TodoListController
 
     public function toggleCompleted(Base $f3)
     {
-        if (!$f3->exists('SESSION.userId')) {
-            $f3->set('view', 'unauthorized.htm');
-            echo Template::instance()->render('layout.htm');
-            return;
-        }
-
         parse_str(file_get_contents("php://input"), $request);
 
         $validator = new Validator($request, [
@@ -105,12 +96,6 @@ class TodoListController
      */
     public function updateDeadline(Base $f3, array $params): void
     {
-        if (!$f3->exists('SESSION.userId')) {
-            $f3->set('view', 'unauthorized.htm');
-            echo Template::instance()->render('layout.htm');
-            return;
-        }
-
         parse_str(file_get_contents("php://input"), $request);
 
         $validator = new Validator(array_merge($request, $params), [
@@ -139,12 +124,6 @@ class TodoListController
      */
     public function updateTodo(Base $f3, array $params): void
     {
-        if (!$f3->exists('SESSION.userId')) {
-            $f3->set('view', 'unauthorized.htm');
-            echo Template::instance()->render('layout.htm');
-            return;
-        }
-
         parse_str(file_get_contents("php://input"), $request);
 
         $validator = new Validator(array_merge($request, $params), [
